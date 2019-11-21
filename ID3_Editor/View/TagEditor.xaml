@@ -1,0 +1,45 @@
+﻿<Window x:Class="ID3_Editor.View.TagEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ID3_Editor.View"
+        mc:Ignorable="d"
+        Title="TagEditor" Height="450" Width="800">
+    <Grid>
+
+        <!--Layout-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        
+        <!--Way-->
+        <Label Grid.Row="0" Content="FileWay"/>
+
+        <!--EditRegion-->
+        <TabControl Grid.Row="1">
+            <TabItem Header="Info">
+                
+            </TabItem>
+
+            <TabItem Header="Lyric">
+                
+            </TabItem>
+
+            <TabItem Header="ID3 ?">
+                
+            </TabItem>
+                     
+        </TabControl>
+
+        <!--SaveCancel-->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Button Content="Save"/>
+            <Button Content="Cancel"/>
+        </StackPanel>
+
+
+    </Grid>
+</Window>

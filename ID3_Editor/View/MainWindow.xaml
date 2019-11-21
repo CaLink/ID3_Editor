@@ -21,15 +21,40 @@
         <!--???BG-Picture???-->
         <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">
             <Image/>
-            <Label/>
-            <Label/>
-            <Label/>
+            <Label Content="askldj"/>
+            <Label Content="askldj"/>
+            <Label Content="askldj"/>
         </StackPanel>
 
         <!--FileList-->
-        <ListView Grid.Column="1">
+        <ListBox Grid.Column="1">
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Name</Label>
+                    <Label> --- </Label>
+                    <Label>Album</Label>
+                </StackPanel>
+            </ListBoxItem>
+        </ListBox>
+        
+        <!--Menu-->
+        <Menu Grid.Column="1" Grid.Row="1">
+            <MenuItem Header="Add">
+                
+            </MenuItem>
+            <MenuItem Header="Remove">
+                
+            </MenuItem>
+            <MenuItem Header="Sort">
+                
+            </MenuItem>
+            
+            <!--SearchBox-->
+            <TextBox/>
 
-        </ListView>
+        </Menu>
+        
+        
 
     </Grid>
 </Window>
