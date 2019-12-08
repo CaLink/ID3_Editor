@@ -20,13 +20,6 @@
 
         <!--EditRegion-->
         <TabControl Grid.Row="1">
-            <TabItem Header="Info">
-                
-            </TabItem>
-
-            <TabItem Header="Lyric">
-                
-            </TabItem>
 
             <TabItem Header="ID3 ?">
                 

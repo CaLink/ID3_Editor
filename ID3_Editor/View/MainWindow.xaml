@@ -4,57 +4,47 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ID3_Editor"
+        xmlns:View="clr-namespace:ID3_Editor.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="450" Width="500">
+    <Window.Resources>
+        <View:ViewMainWindow x:Key="ViewModel"/>
+    </Window.Resources>
+    
+    <Grid DataContext="{StaticResource ViewModel}">
         <!--Layout-->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+        
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
-        <!--InfoPanel-->
-        <!--???BG-Picture???-->
-        <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">
-            <Image/>
-            <Label Content="askldj"/>
-            <Label Content="askldj"/>
-            <Label Content="askldj"/>
-        </StackPanel>
+        
 
         <!--FileList-->
-        <ListBox Grid.Column="1">
-            <ListBoxItem>
-                <StackPanel Orientation="Horizontal">
-                    <Label>Name</Label>
-                    <Label> --- </Label>
-                    <Label>Album</Label>
-                </StackPanel>
-            </ListBoxItem>
+        <ListBox Grid.Row="0" ItemsSource="{Binding File}" DisplayMemberPath="Name" DataContext="{StaticResource ViewModel}" SelectionMode="Extended">
+            
         </ListBox>
         
         <!--Menu-->
-        <Menu Grid.Column="1" Grid.Row="1">
+        <Menu Grid.Row="1">
             <MenuItem Header="Add">
-                
+                <MenuItem Header="Add File" Command="{Binding Add}" CommandParameter="file"/>
+                <MenuItem Header="Add Directory" Command="{Binding Add}" CommandParameter="dir"/>
             </MenuItem>
             <MenuItem Header="Remove">
-                
+                <MenuItem Header="Selected Files" Command="{Binding RemoveSelected}" CommandParameter="file"/>
+                <MenuItem Header="Clear List" Command="{Binding Remove}" CommandParameter="clear"/>
+                <MenuItem Header="Duplicate files" Command="{Binding Remove}" CommandParameter="duplicate"/>
             </MenuItem>
             <MenuItem Header="Sort">
-                
+                <MenuItem Header="By Directory" Command="{Binding Sort}" CommandParameter="dir"/>
+                <MenuItem Header="By File" Command="{Binding Sort}" CommandParameter="file"/>
             </MenuItem>
             
             <!--SearchBox-->
             <TextBox/>
-
+            <Button Content="debug" Click="Button_Click"/>
         </Menu>
         
-        
-
     </Grid>
 </Window>
