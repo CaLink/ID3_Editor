@@ -5,7 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ID3_Editor.View"
         mc:Ignorable="d"
-        Title="TagEditor" Height="450" Width="800">
+        Title="TagEditor" Height="291" Width="329">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Style.Setters>
+                <Setter Property="FontSize" Value="16px"/>
+                <Setter Property="Margin" Value="0 0 0 5"/>
+                <Setter Property="Width" Value="200"/>
+            </Style.Setters>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Style.Setters>
+                <Setter Property="FontSize" Value="16px"/>
+                <Setter Property="Margin" Value="0 0 0 5"/>
+                <Setter Property="Width" Value="200"/>
+            </Style.Setters>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Style.Setters>
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+                <Setter Property="FontSize" Value="16px"/>
+                <Setter Property="Margin" Value="25 0 10 5"/>
+            </Style.Setters>
+        </Style>
+
+    </Window.Resources>
     <Grid>
 
         <!--Layout-->
@@ -14,18 +38,34 @@
             <RowDefinition/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        
+
         <!--Way-->
-        <Label Grid.Row="0" Content="FileWay"/>
+        <TextBox Grid.Row="0" Text="FileWay" FontSize="12" Width="Auto"/>
 
         <!--EditRegion-->
-        <TabControl Grid.Row="1">
 
-            <TabItem Header="ID3 ?">
-                
-            </TabItem>
-                     
-        </TabControl>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Track №"/>
+                <TextBlock Text="Title"/>
+                <TextBlock Text="Artist"/>
+                <TextBlock Text="Album"/>
+                <TextBlock Text="Genre"/>
+                <TextBlock Text="Year"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Text="int" Width="50"/>
+                    <TextBlock Text="/" Width="10"/>
+                    <TextBox Text="int" Width="50"/>
+                </StackPanel>
+                <TextBox Text="String"/>
+                <TextBox Text="String"/>
+                <ComboBox ItemsSource="{Binding smt}"/>
+                <TextBox Text="int"/>
+
+            </StackPanel>
+        </StackPanel>
 
         <!--SaveCancel-->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
