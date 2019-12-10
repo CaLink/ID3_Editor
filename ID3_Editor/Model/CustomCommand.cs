@@ -25,6 +25,7 @@ namespace ID3_Editor.Model
         }
 
         public bool CanExecute(object parameter)
+
         {
             if (check == null)
                 return true;

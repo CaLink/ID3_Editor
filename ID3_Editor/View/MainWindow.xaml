@@ -21,18 +21,18 @@
         
 
         <!--FileList-->
-        <ListBox Grid.Row="0" ItemsSource="{Binding File}" DisplayMemberPath="Name" DataContext="{StaticResource ViewModel}" SelectionMode="Extended">
-            
-        </ListBox>
-        
-        <!--Menu-->
+        <ListBox x:Name="listBox" Grid.Row="0" ItemsSource="{Binding File}" DisplayMemberPath="Name" DataContext="{StaticResource ViewModel}"/>
+        <!--Я тупой що пиздец-->
+
+
+            <!--Menu-->
         <Menu Grid.Row="1">
             <MenuItem Header="Add">
                 <MenuItem Header="Add File" Command="{Binding Add}" CommandParameter="file"/>
                 <MenuItem Header="Add Directory" Command="{Binding Add}" CommandParameter="dir"/>
             </MenuItem>
             <MenuItem Header="Remove">
-                <MenuItem Header="Selected Files" Command="{Binding RemoveSelected}" CommandParameter="file"/>
+                <MenuItem Header="Selected File" Command="{Binding RemoveSelected}" CommandParameter="{Binding SelectedItem, ElementName=listBox}"/>
                 <MenuItem Header="Clear List" Command="{Binding Remove}" CommandParameter="clear"/>
                 <MenuItem Header="Duplicate files" Command="{Binding Remove}" CommandParameter="duplicate"/>
             </MenuItem>

@@ -1,9 +1,12 @@
 ﻿using ID3_Editor.Model;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,14 +15,20 @@ namespace ID3_Editor.ViewModel
 {
     class ViewMainWindow : NotifyModel
     {
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport("shlwapi.dll", CharSet = CharSet.Unicode)]
+        public static extern int StrCmpLogicalW(string psz1, string psz2);
+
         public ObservableCollection<FileInfo> File { get; set; }
         public CustomCommand<string> Add { get; set; }
-        public CustomCommand<Collection<Object>> RemoveSelected { get; set; }
+        public CustomCommand<FileInfo> RemoveSelected { get; set; }
         public CustomCommand<string> Remove { get; set; }
+        public CustomCommand<string> Sort { get; set; }
+
 
 
         List<FileInfo> _selectedFile;
-        public List<FileInfo> SelecttedFile { get { return _selectedFile; } set {_selectedFile = value; } }
+        public List<FileInfo> SelecttedFile { get { return _selectedFile; } set { _selectedFile = value; } }
 
         public ViewMainWindow()
         {
@@ -35,7 +44,7 @@ namespace ID3_Editor.ViewModel
                             OpenFileDialog ofd = new OpenFileDialog();
                             ofd.Multiselect = true;
                             ofd.Filter = "MP3 (.mp3)|*.mp3";
-                            if(ofd.ShowDialog() == DialogResult.OK)
+                            if (ofd.ShowDialog() == DialogResult.OK)
                             {
                                 foreach (string item in ofd.FileNames)
                                 {
@@ -44,11 +53,11 @@ namespace ID3_Editor.ViewModel
                             }
                             break;
 
-                        case "dir" :
+                        case "dir":
                             FolderBrowserDialog fbd = new FolderBrowserDialog();
                             if (fbd.ShowDialog() == DialogResult.OK)
                             {
-                                 string[] temp = Directory.GetFiles(fbd.SelectedPath, "*.mp3", SearchOption.AllDirectories);
+                                string[] temp = Directory.GetFiles(fbd.SelectedPath, "*.mp3", SearchOption.AllDirectories);
 
                                 foreach (string item in temp)
                                 {
@@ -57,18 +66,21 @@ namespace ID3_Editor.ViewModel
                             }
                             break;
                     }
+                    RaiseEvent(nameof(File));
+
                 });
 
-            RemoveSelected = new CustomCommand<Collection<Object>>(
+            // Я хз как это все сделать верно
+            // Поэтому пользователю будет больно
+            // Будет удалять по файлу
+            // ГЫ
+            RemoveSelected = new CustomCommand<FileInfo>(
                 (s) =>
                 {
-                    /*
-                     * SAS
-                     * Вот этот пацан тоже не работает
-                    List<FileInfo> temp = s.Cast<FileInfo>.ToList();
-                     * кто бы сомневался 
-                     * SAS
-                    */
+                    File.Remove(s);
+                    RaiseEvent(nameof(File));
+
+
                 });
 
 
@@ -80,17 +92,68 @@ namespace ID3_Editor.ViewModel
                         case "clear":
                             File.Clear();
                             break;
-                            
+
 
                         case "duplicate":
                             // SAS почему-то не работает
                             // SAS А чего я ещё ожидал
-                            File = new ObservableCollection<FileInfo>(File.Distinct().ToList());
+
+                            var temp = File.ToList();
+                            List<string> ass = new List<string>();
+
+
+                            temp.ForEach(((x) => ass.Add(x.FullName)));
+                            ass = ass.Distinct().ToList();
+
+                            File = new ObservableCollection<FileInfo>();
+                            ass.ForEach(((x) =>File.Add(new FileInfo(x))));
                             Data.File = File;
                             break;
-                            
+
                     }
+                    RaiseEvent(nameof(File));
+
                 });
+
+            Sort = new CustomCommand<string>(
+                (s) =>
+                {
+                    var temp = File.ToList();
+
+                    switch (s)
+                    {
+                        case "dir":
+                            temp.Sort(
+                                (x, y) =>
+                                {
+                                    return StrCmpLogicalW(x.DirectoryName.ToString(), y.DirectoryName.ToString());
+                                });
+                            break;
+
+                        case "file":
+                            temp.Sort(
+                                (x, y) =>
+                                {
+                                    return StrCmpLogicalW(x.Name.ToString(), y.Name.ToString());
+                                });
+                            break;
+                    }
+
+                    File = new ObservableCollection<FileInfo>(temp);
+                    Data.File = File;
+                    RaiseEvent(nameof(File));
+
+
+
+
+                });
+
+
+
         }
+
+        
+
+
     }
 }
