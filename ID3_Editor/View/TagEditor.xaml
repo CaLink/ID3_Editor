@@ -4,9 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ID3_Editor.View"
+        xmlns:genre="clr-namespace:ID3_Editor.Model"
         mc:Ignorable="d"
         Title="TagEditor" Height="291" Width="329">
     <Window.Resources>
+        <genre:Data x:Key="Data"/>
+
         <Style TargetType="TextBox">
             <Style.Setters>
                 <Setter Property="FontSize" Value="16px"/>
@@ -40,36 +43,32 @@
         </Grid.RowDefinitions>
 
         <!--Way-->
-        <TextBox Grid.Row="0" Text="FileWay" FontSize="12" Width="Auto"/>
+        <TextBox x:Name="Way" Grid.Row="0" Text="FileWay" FontSize="12" Width="Auto"/>
 
         <!--EditRegion-->
 
         <StackPanel Orientation="Horizontal" Grid.Row="1">
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="Track №"/>
-                <TextBlock Text="Title"/>
-                <TextBlock Text="Artist"/>
-                <TextBlock Text="Album"/>
-                <TextBlock Text="Genre"/>
-                <TextBlock Text="Year"/>
+                <TextBlock Text="Title" Height="27"/>
+                <TextBlock Text="Artist" Height="27"/>
+                <TextBlock Text="Album" Height="27"/>
+                <TextBlock Text="Genre" Height="27"/>
+                <TextBlock Text="Year" Height="27"/>
             </StackPanel>
             <StackPanel Orientation="Vertical">
-                <StackPanel Orientation="Horizontal">
-                    <TextBox Text="int" Width="50"/>
-                    <TextBlock Text="/" Width="10"/>
-                    <TextBox Text="int" Width="50"/>
-                </StackPanel>
-                <TextBox Text="String"/>
-                <TextBox Text="String"/>
-                <ComboBox ItemsSource="{Binding smt}"/>
-                <TextBox Text="int"/>
+
+                <TextBox x:Name="Title" Text="String"/>
+                <TextBox x:Name="Artist" Text="String"/>
+                <TextBox x:Name="Album" Text="String"/>
+                <ComboBox x:Name="Genre" ItemsSource="{Binding genres}" DataContext="{StaticResource Data}"/>
+                <TextBox x:Name="Year" Text="int"/>
 
             </StackPanel>
         </StackPanel>
 
         <!--SaveCancel-->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-            <Button Content="Save"/>
+            <Button Content="Save" Click="Button_Click"/>
             <Button Content="Cancel"/>
         </StackPanel>
 

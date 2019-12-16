@@ -21,7 +21,15 @@
         
 
         <!--FileList-->
-        <ListBox x:Name="listBox" Grid.Row="0" ItemsSource="{Binding File}" DisplayMemberPath="Name" DataContext="{StaticResource ViewModel}"/>
+        <ListBox x:Name="listBox" Grid.Row="0" ItemsSource="{Binding File}" DisplayMemberPath="Name" DataContext="{StaticResource ViewModel}" SelectedItem="{Binding SellllectedFile}">
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Remove Selected File" Command="{Binding RemoveSelected}"/>
+                    <MenuItem Header="Edit Selected File" Command="{Binding OpenSmt}"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListBox>
+            
         <!--Я тупой що пиздец-->
 
 

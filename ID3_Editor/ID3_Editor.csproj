@@ -57,6 +57,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Data.cs" />
+    <Compile Include="Model\ID3\ID3v23.cs" />
+    <Compile Include="Model\ID3\Tag.cs" />
+    <Compile Include="Model\ID3\Tags\StringTag.cs" />
+    <Compile Include="Model\ID3\Tags\TCON.cs" />
     <Compile Include="Model\NotifyModel.cs" />
     <Compile Include="ViewModel\ViewMainWindow.cs" />
     <Compile Include="View\TagEditor.xaml.cs">

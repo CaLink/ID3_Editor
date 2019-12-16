@@ -24,7 +24,10 @@ namespace ID3_Editor.ViewModel
         public CustomCommand<FileInfo> RemoveSelected { get; set; }
         public CustomCommand<string> Remove { get; set; }
         public CustomCommand<string> Sort { get; set; }
+        public CustomCommand<FileInfo> OpenSmt{ get; set; }
 
+        FileInfo selectedFile;
+        public FileInfo SellllectedFile{ get { return selectedFile; } set { selectedFile = value;} }
 
 
         List<FileInfo> _selectedFile;
@@ -77,10 +80,14 @@ namespace ID3_Editor.ViewModel
             RemoveSelected = new CustomCommand<FileInfo>(
                 (s) =>
                 {
-                    File.Remove(s);
+                    // Говно-Жопа
+                    if (SellllectedFile == null)
+                        return;
+
+                    File.Remove(SellllectedFile);
                     RaiseEvent(nameof(File));
-
-
+                    // Мне не нравится
+                    // А, я не заметил комент выше
                 });
 
 
@@ -95,9 +102,6 @@ namespace ID3_Editor.ViewModel
 
 
                         case "duplicate":
-                            // SAS почему-то не работает
-                            // SAS А чего я ещё ожидал
-
                             var temp = File.ToList();
                             List<string> ass = new List<string>();
 
@@ -143,12 +147,16 @@ namespace ID3_Editor.ViewModel
                     Data.File = File;
                     RaiseEvent(nameof(File));
 
-
-
-
                 });
 
-
+            OpenSmt = new CustomCommand<FileInfo>(
+                (s) => 
+                {
+                    if (SellllectedFile == null)
+                        return;
+                    Data.Travel = SellllectedFile.FullName;
+                    new View.TagEditor(SellllectedFile.FullName).ShowDialog();
+                });
 
         }
 
