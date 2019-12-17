@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ID3_Editor.Model.ID3
 {
-    class Tag
+    abstract class Tag
     {
         public byte[] id = new byte[4];
         public byte[] byteSize = new byte[4];
@@ -103,6 +104,32 @@ namespace ID3_Editor.Model.ID3
 
 
         }
+
+        public int GetEbanyTvoyRotSize(int ebanySize)
+        {
+            List<char> jepa = new List<char>();
+            BitArray ass = new BitArray(BitConverter.GetBytes(ebanySize));
+
+            for (int i = 0; i < ass.Length-3; i++)
+            {
+                if (i == 7 || i == 14 || i == 21)
+                    jepa.Add('0');
+                jepa.Add((bool)ass[i] ? '1' : '0');
+            }
+
+            for (int i = 0; i < ass.Length; i++)
+            {
+                ass[i] = jepa[i] == '1' ? true : false;
+            }
+
+            int[] resulr = new int[1];
+            ass.CopyTo(resulr, 0);
+
+            return resulr[1];
+
+        }
+
+        public abstract List<byte> GetByteTag(string newTag,string from);
 
     }
 }

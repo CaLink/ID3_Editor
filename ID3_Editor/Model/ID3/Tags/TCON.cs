@@ -60,5 +60,42 @@ namespace ID3_Editor.Model.ID3.Tags
             }
             return ans;
         }
+
+        public TCON()
+        { }
+
+        public override List<byte> GetByteTag(string newTag, string from)
+        {
+            List<byte> ans = new List<byte>();
+
+            id = new byte[4] { 0x54, 0x43, 0x4f, 0x4e };
+
+            int size = GetEbanyTvoyRotSize(newTag.Length);
+            byteSize = BitConverter.GetBytes(size);
+
+            flags = new byte[2] { 0, 0 };
+
+            List<byte> content = new List<byte>();
+
+            content.AddRange(new List<byte> { 0x00, 0x28 });
+            content.AddRange(System.Text.Encoding.UTF8.GetBytes(newTag));
+            content.Add(0x29);
+
+
+            id.ToList().ForEach((s) => { ans.Add(s); });
+
+            for (int i = byteSize.Length - 1; i > -1; i++)
+            {
+                ans.Add(byteSize[i]);
+            }
+
+            flags.ToList().ForEach((s) => { ans.Add(s); });
+
+            content.ForEach((s) => { ans.Add(s); });
+
+            // Могущественный Аллах, Пожалуйста, пусть это заработает;
+
+            return ans;
+        }
     }
 }
