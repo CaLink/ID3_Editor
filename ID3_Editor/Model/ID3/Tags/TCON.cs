@@ -70,7 +70,7 @@ namespace ID3_Editor.Model.ID3.Tags
 
             id = new byte[4] { 0x54, 0x43, 0x4f, 0x4e };
 
-            int size = GetEbanyTvoyRotSize(int.Parse(newTag) + 2);
+            int size = GetEbanyTvoyRotSize(newTag.Length + 3);
             byteSize = BitConverter.GetBytes(size);
 
             flags = new byte[2] { 0, 0 };

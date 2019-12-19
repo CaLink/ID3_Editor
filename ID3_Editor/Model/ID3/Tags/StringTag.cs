@@ -38,7 +38,7 @@ namespace ID3_Editor.Model.ID3.Tags
             
             id = System.Text.Encoding.UTF8.GetBytes(from.ToCharArray());
 
-            int size = GetEbanyTvoyRotSize(newTag.Length);
+            int size = GetEbanyTvoyRotSize(newTag.Length*2+3);
             byteSize = BitConverter.GetBytes(size);
 
             flags = new byte[2] { 0, 0 };

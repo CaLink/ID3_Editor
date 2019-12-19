@@ -110,7 +110,7 @@ namespace ID3_Editor.Model.ID3
             List<char> jepa = new List<char>();
             BitArray ass = new BitArray(BitConverter.GetBytes(ebanySize));
 
-            for (int i = 0; i < ass.Length-3; i++)
+            for (int i = 0; i < ass.Length - 3; i++)
             {
                 if (i == 7 || i == 14 || i == 21)
                     jepa.Add('0');
