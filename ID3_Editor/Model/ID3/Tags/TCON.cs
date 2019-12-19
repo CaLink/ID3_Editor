@@ -84,7 +84,7 @@ namespace ID3_Editor.Model.ID3.Tags
 
             id.ToList().ForEach((s) => { ans.Add(s); });
 
-            for (int i = byteSize.Length - 1; i > -1; i++)
+            for (int i = byteSize.Length - 1; i > -1; i--)
             {
                 ans.Add(byteSize[i]);
             }

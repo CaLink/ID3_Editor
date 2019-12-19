@@ -46,13 +46,15 @@ namespace ID3_Editor.Model.ID3
             // Создание или Пересоздание тега
             this.way = way;
             List<byte> ans = new List<byte>();
+            List<byte> tags = new List<byte>();
+
 
 
             file = File.ReadAllBytes(way).ToList();
             if (ID3_Info(way))
             {
                 size = IntMaker(new byte[4] { file[6], file[7], file[8], file[9] });
-                file.RemoveRange(0, size);
+                file.RemoveRange(0, size+10);
             }
 
             // sas
@@ -60,20 +62,81 @@ namespace ID3_Editor.Model.ID3
             // sas
 
 
+            
+            /*ans.AddRange(new List<byte>() { 0x49, 0x44, 0x33, 0x03, 0x00, 0x00 });
+
+            int sizeOfReload = 0;
 
             if (!string.IsNullOrEmpty(title))
-                ans.AddRange(new StringTag().GetByteTag(title, "TIT2"));
-            if (!string.IsNullOrEmpty(title))
-                ans.AddRange(new StringTag().GetByteTag(artist, "TPE1"));
-            if (!string.IsNullOrEmpty(title))
-                ans.AddRange(new StringTag().GetByteTag(album, "TALB"));
-            if (!string.IsNullOrEmpty(title))
-                ans.AddRange(new StringTag().GetByteTag(year, "TYER"));
-            if (!string.IsNullOrEmpty(title))
-                ans.AddRange(new TCON().GetByteTag(title, "TCON"));
+            {
+                TIT2 = new StringTag();
+                tags.AddRange(TIT2.GetByteTag(title, "TIT2"));
+                sizeOfReload += IntMaker(TIT2.byteSize) + 10;
+            }
+            if (!string.IsNullOrEmpty(artist))
+            {
+                TPE1 = new StringTag();
+                tags.AddRange(TPE1.GetByteTag(artist, "TPE1"));
+                sizeOfReload += IntMaker(TPE1.byteSize) + 10;
+
+            }
+            if (!string.IsNullOrEmpty(album))
+            {
+                TALB = new StringTag();
+                tags.AddRange(TALB.GetByteTag(album, "TALB"));
+                sizeOfReload += IntMaker(TALB.byteSize) + 10;
+
+            }
+            if (!string.IsNullOrEmpty(year))
+            {
+                TYER = new StringTag();
+                tags.AddRange(TYER.GetByteTag(year, "TYER"));
+                sizeOfReload += IntMaker(TYER.byteSize) + 10;
+
+            }
+            if (!string.IsNullOrEmpty(genre))
+            {
+                TCON = new TCON();
+                tags.AddRange(TCON.GetByteTag(genre, "TCON"));
+                sizeOfReload += IntMaker(TCON.byteSize) + 10;
+
+            }
+
+            if (sizeOfReload == 0)
+                return;
+            else
+            {
+                byte[] tempSize = BitConverter.GetBytes(GetEbanyTvoyRotSize(sizeOfReload));
+                //byte[] tempSize = BitConverter.GetBytes(GetEbanyTvoyRotSize(4086));
 
 
+                for (int i = (tempSize.Length - 1); i > -1; i--)
+                {
+                    ans.Add(tempSize[i]);
+                }
 
+                ans.AddRange(tags);
+                ans.AddRange(file);
+
+                using (FileStream fs = new FileStream(new FileInfo(way).DirectoryName +"\\" +artist + " - " + title +".mp3", FileMode.Create, FileAccess.Write))
+                using (BinaryWriter bw = new BinaryWriter(fs))
+                {
+                    bw.Write(ans.ToArray());
+
+                }
+
+            }*/
+
+            //
+
+            ans.AddRange(file);
+
+            using (FileStream fs = new FileStream(new FileInfo(way).DirectoryName + "\\" + artist + " - " + title + ".mp3", FileMode.Create, FileAccess.Write))
+            using (BinaryWriter bw = new BinaryWriter(fs))
+            {
+                bw.Write(ans.ToArray());
+            }
+            
 
         }
 

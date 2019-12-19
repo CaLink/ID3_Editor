@@ -57,11 +57,11 @@
             </StackPanel>
             <StackPanel Orientation="Vertical">
 
-                <TextBox x:Name="Title" Text="String"/>
-                <TextBox x:Name="Artist" Text="String"/>
-                <TextBox x:Name="Album" Text="String"/>
+                <TextBox x:Name="Title" />
+                <TextBox x:Name="Artist" />
+                <TextBox x:Name="Album" />
                 <ComboBox x:Name="Genre" ItemsSource="{Binding genres}" DataContext="{StaticResource Data}"/>
-                <TextBox x:Name="Year" Text="int"/>
+                <TextBox x:Name="Year"/>
 
             </StackPanel>
         </StackPanel>

@@ -33,16 +33,21 @@ namespace ID3_Editor.View
                 edited = new ID3v23(way);
 
                 Way.Text = way;
-                if (!string.IsNullOrEmpty(edited.TIT2.Content))
-                    Title.Text = edited.TIT2.Content;
-                if (!string.IsNullOrEmpty(edited.TPE1.Content))
-                    Artist.Text = edited.TPE1.Content;
-                if (!string.IsNullOrEmpty(edited.TALB.Content))
-                    Album.Text = edited.TALB.Content;
-                if (!string.IsNullOrEmpty(edited.TYER.Content))
-                    Year.Text = edited.TYER.Content;
-                if (!string.IsNullOrEmpty(edited.TCON.Content))
-                    Genre.SelectedItem = edited.TCON.Content;
+                if (edited.TIT2 != null)
+                    if (!string.IsNullOrEmpty(edited.TIT2.Content))
+                        Title.Text = edited.TIT2.Content;
+                if (edited.TPE1 != null)
+                    if (!string.IsNullOrEmpty(edited.TPE1.Content))
+                        Artist.Text = edited.TPE1.Content;
+                if (edited.TALB != null)
+                    if (!string.IsNullOrEmpty(edited.TALB.Content))
+                        Album.Text = edited.TALB.Content;
+                if (edited.TYER != null)
+                    if (!string.IsNullOrEmpty(edited.TYER.Content))
+                        Year.Text = edited.TYER.Content;
+                if (edited.TCON != null)
+                    if (!string.IsNullOrEmpty(edited.TCON.Content))
+                        Genre.SelectedItem = edited.TCON.Content;
 
 
 
@@ -55,6 +60,9 @@ namespace ID3_Editor.View
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // Тут просто бахнуть другой конструктор ID3v23
+            new ID3v23(way, Title.Text, Artist.Text, Album.Text, Year.Text, Genre.SelectedItem.ToString());
+            this.Close();
+
         }
     }
 }

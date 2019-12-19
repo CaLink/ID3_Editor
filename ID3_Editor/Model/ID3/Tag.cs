@@ -125,7 +125,7 @@ namespace ID3_Editor.Model.ID3
             int[] resulr = new int[1];
             ass.CopyTo(resulr, 0);
 
-            return resulr[1];
+            return resulr[0];
 
         }
 
