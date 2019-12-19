@@ -60,7 +60,7 @@ namespace ID3_Editor.View
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // Тут просто бахнуть другой конструктор ID3v23
-            new ID3v23(way, Title.Text, Artist.Text, Album.Text, Year.Text, Genre.SelectedItem.ToString());
+            new ID3v23(way, Title.Text, Artist.Text, Album.Text, Year.Text, Genre.SelectedIndex.ToString());
             this.Close();
 
         }

@@ -63,59 +63,75 @@ namespace ID3_Editor.Model.ID3
 
 
             
-            /*ans.AddRange(new List<byte>() { 0x49, 0x44, 0x33, 0x03, 0x00, 0x00 });
+            ans.AddRange(new List<byte>() { 0x49, 0x44, 0x33, 0x03, 0x00, 0x00 ,0x00,0x00,0x1f,0x76});
 
             int sizeOfReload = 0;
 
-            if (!string.IsNullOrEmpty(title))
-            {
-                TIT2 = new StringTag();
-                tags.AddRange(TIT2.GetByteTag(title, "TIT2"));
-                sizeOfReload += IntMaker(TIT2.byteSize) + 10;
-            }
-            if (!string.IsNullOrEmpty(artist))
-            {
-                TPE1 = new StringTag();
-                tags.AddRange(TPE1.GetByteTag(artist, "TPE1"));
-                sizeOfReload += IntMaker(TPE1.byteSize) + 10;
-
-            }
+            
+            
             if (!string.IsNullOrEmpty(album))
             {
                 TALB = new StringTag();
                 tags.AddRange(TALB.GetByteTag(album, "TALB"));
-                sizeOfReload += IntMaker(TALB.byteSize) + 10;
-
-            }
-            if (!string.IsNullOrEmpty(year))
-            {
-                TYER = new StringTag();
-                tags.AddRange(TYER.GetByteTag(year, "TYER"));
-                sizeOfReload += IntMaker(TYER.byteSize) + 10;
+                sizeOfReload++;
+                //sizeOfReload += IntMaker(TALB.byteSize) + 10;
 
             }
             if (!string.IsNullOrEmpty(genre))
             {
                 TCON = new TCON();
                 tags.AddRange(TCON.GetByteTag(genre, "TCON"));
-                sizeOfReload += IntMaker(TCON.byteSize) + 10;
+                sizeOfReload++;
+                //sizeOfReload += IntMaker(TCON.byteSize) + 10;
 
             }
+            if (!string.IsNullOrEmpty(title))
+            {
+                TIT2 = new StringTag();
+                tags.AddRange(TIT2.GetByteTag(title, "TIT2"));
+                sizeOfReload++;
+                //sizeOfReload += IntMaker(TIT2.byteSize) + 10;
+            }
+            if (!string.IsNullOrEmpty(artist))
+            {
+                TPE1 = new StringTag();
+                tags.AddRange(TPE1.GetByteTag(artist, "TPE1"));
+                sizeOfReload++;
+                //sizeOfReload += IntMaker(TPE1.byteSize) + 10;
+
+            }
+            if (!string.IsNullOrEmpty(year))
+            {
+                TYER = new StringTag();
+                tags.AddRange(TYER.GetByteTag(year, "TYER"));
+                sizeOfReload++;
+                //sizeOfReload += IntMaker(TYER.byteSize) + 10;
+
+            }
+            
 
             if (sizeOfReload == 0)
                 return;
             else
             {
-                byte[] tempSize = BitConverter.GetBytes(GetEbanyTvoyRotSize(sizeOfReload));
+                //byte[] tempSize = BitConverter.GetBytes(GetEbanyTvoyRotSize(sizeOfReload));
                 //byte[] tempSize = BitConverter.GetBytes(GetEbanyTvoyRotSize(4086));
 
 
-                for (int i = (tempSize.Length - 1); i > -1; i--)
+                /*for (int i = (tempSize.Length - 1); i > -1; i--)
                 {
                     ans.Add(tempSize[i]);
                 }
+                */
 
                 ans.AddRange(tags);
+
+                int remain = 4086 - tags.Count;
+                for (int i = 0; i < remain; i++)
+                {
+                    ans.Add(0x00);
+                }
+
                 ans.AddRange(file);
 
                 using (FileStream fs = new FileStream(new FileInfo(way).DirectoryName +"\\" +artist + " - " + title +".mp3", FileMode.Create, FileAccess.Write))
@@ -125,9 +141,10 @@ namespace ID3_Editor.Model.ID3
 
                 }
 
-            }*/
+            }
 
             //
+            /*
 
             ans.AddRange(file);
 
@@ -137,7 +154,7 @@ namespace ID3_Editor.Model.ID3
                 bw.Write(ans.ToArray());
             }
             
-
+            */
         }
 
 
@@ -176,7 +193,7 @@ namespace ID3_Editor.Model.ID3
             ByteReader(id, br);
             string temp = GetContent(id);
 
-            while ((findAll !=5 && ((br.BaseStream.Length - br.BaseStream.Position)>=4)))
+            while ((findAll !=5 && ((size - br.BaseStream.Position)>=10)))
             {
                 switch (temp)
                 {
