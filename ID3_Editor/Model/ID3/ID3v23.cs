@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ID3_Editor.Model.ID3
 {
@@ -134,17 +135,12 @@ namespace ID3_Editor.Model.ID3
 
                 ans.AddRange(file);
 
-                if (string.IsNullOrEmpty(artist) && string.IsNullOrEmpty(title))
-                {
-                    int i = 0;
-                    Data.NewPath = new FileInfo(way).DirectoryName +"\\" + "1 - 1"+".mp3";
-                    while(new FileInfo(Data.NewPath).Exists)
-                    {
-                        Data.NewPath = new FileInfo(way).DirectoryName + "\\" + i.ToString() + " - " + i.ToString() + ".mp3";
-                    }
-                }
-                else
-                    Data.NewPath = new FileInfo(way).DirectoryName + "\\" + artist + " - " + title + ".mp3";
+                
+                Data.NewPath = new FileInfo(way).DirectoryName + "\\" + artist + " - " + title + ".mp3";
+
+                if (new FileInfo(Data.NewPath).Exists)
+                    if (MessageBox.Show("Файл с таким именем уже существует. Желаете его перезаписать?", "Caption", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                        return;
 
                 using (FileStream fs = new FileStream(Data.NewPath, FileMode.Create, FileAccess.Write))
                 using (BinaryWriter bw = new BinaryWriter(fs))

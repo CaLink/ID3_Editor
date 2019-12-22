@@ -59,6 +59,11 @@ namespace ID3_Editor.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            if ((string.IsNullOrEmpty(Title.Text) || string.IsNullOrEmpty(Artist.Text) || string.IsNullOrEmpty(Album.Text) || string.IsNullOrEmpty(Year.Text) || string.IsNullOrEmpty(Genre.SelectedIndex.ToString())))
+            {
+                MessageBox.Show("Заполните все поля");
+                return;
+            }
             // Тут просто бахнуть другой конструктор ID3v23
             new ID3v23(way, Title.Text, Artist.Text, Album.Text, Year.Text, Genre.SelectedIndex.ToString());
             this.Close();
