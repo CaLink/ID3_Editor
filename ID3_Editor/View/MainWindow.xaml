@@ -25,7 +25,7 @@
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Remove Selected File" Command="{Binding RemoveSelected}"/>
-                    <MenuItem Header="Edit Selected File" Command="{Binding OpenSmt}"/>
+                    <MenuItem Header="Edit Selected File" Command="{Binding OpenSmt}" CommandParameter="{Binding SelectedItem, ElementName=listBox}"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>
@@ -49,9 +49,7 @@
                 <MenuItem Header="By File" Command="{Binding Sort}" CommandParameter="file"/>
             </MenuItem>
             
-            <!--SearchBox-->
-            <TextBox/>
-            <Button Content="debug" Click="Button_Click"/>
+
         </Menu>
         
     </Grid>

@@ -108,7 +108,7 @@ namespace ID3_Editor.Model.ID3
                 //sizeOfReload += IntMaker(TYER.byteSize) + 10;
 
             }
-            
+
 
             if (sizeOfReload == 0)
                 return;
@@ -134,28 +134,46 @@ namespace ID3_Editor.Model.ID3
 
                 ans.AddRange(file);
 
-                using (FileStream fs = new FileStream(new FileInfo(way).DirectoryName +"\\" +artist + " - " + title +".mp3", FileMode.Create, FileAccess.Write))
+                if (string.IsNullOrEmpty(artist) && string.IsNullOrEmpty(title))
+                {
+                    int i = 0;
+                    Data.NewPath = new FileInfo(way).DirectoryName +"\\" + "1 - 1"+".mp3";
+                    while(new FileInfo(Data.NewPath).Exists)
+                    {
+                        Data.NewPath = new FileInfo(way).DirectoryName + "\\" + i.ToString() + " - " + i.ToString() + ".mp3";
+                    }
+                }
+                else
+                    Data.NewPath = new FileInfo(way).DirectoryName + "\\" + artist + " - " + title + ".mp3";
+
+                using (FileStream fs = new FileStream(Data.NewPath, FileMode.Create, FileAccess.Write))
                 using (BinaryWriter bw = new BinaryWriter(fs))
                 {
                     bw.Write(ans.ToArray());
 
                 }
-
+                Data.Costil = true;
+                // Data.File.Add(new FileInfo(Data.NewPath));
+                if (!(way == Data.NewPath))
+                {
+                    new FileInfo(way).Delete();
+                    Data.Costil = true;
+                }
             }
 
-            //
-            /*
+                //
+                /*
 
-            ans.AddRange(file);
+                ans.AddRange(file);
 
-            using (FileStream fs = new FileStream(new FileInfo(way).DirectoryName + "\\" + artist + " - " + title + ".mp3", FileMode.Create, FileAccess.Write))
-            using (BinaryWriter bw = new BinaryWriter(fs))
-            {
-                bw.Write(ans.ToArray());
+                using (FileStream fs = new FileStream(new FileInfo(way).DirectoryName + "\\" + artist + " - " + title + ".mp3", FileMode.Create, FileAccess.Write))
+                using (BinaryWriter bw = new BinaryWriter(fs))
+                {
+                    bw.Write(ans.ToArray());
+                }
+
+                */
             }
-            
-            */
-        }
 
 
         public static bool ID3_Info(string way)
